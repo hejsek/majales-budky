@@ -1,4 +1,9 @@
+Client for street game written with Angular 2 for festival Budejovicky Majales with use of Open Street maps.
+
+Klient pro pouliční hru "budkobraní" napsaný za pomoci Angularu 2 s použitím Open Street maps pro Budějovický majáles.
+
 # BudkyMajalesClient
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
 
