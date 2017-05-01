@@ -1,0 +1,35 @@
+* {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+	margin: 0;
+}
+
+.boothIcon{
+	font-weight: bold;
+	background-image: url('images/telephone.png');
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+}
+
+button {
+	width: 20%;
+	margin-left: 15%;
+	margin-right: 15%;
+	height: 80px;
+	margin-top: 20px;
+	margin-bottom: 80px;
+	float: left;
+	font-size: 28px;
+	color: white;
+}
+
+button.green {
+	background-color: green;
+}
+
+button.red {
+	background-color: red;
+}
