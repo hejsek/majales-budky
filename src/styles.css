@@ -302,6 +302,16 @@ select#skolaSelect option {
   font-size: 37px;
   border: none;
   border-radius: 0;
+
+  margin-left: 0;
+  margin-right: 0;
+}
+
+button {
+  width: auto;
+   margin-left: 0;
+   margin-right: 0;
+  height: auto;
 }
 
 .obsadit:hover, .obsadit:hover {
