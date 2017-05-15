@@ -69,16 +69,19 @@ export class CaptureComponent implements OnInit {
       //noinspection TypeScriptUnresolvedFunction
       this.dataService.capture(skola, kod)
         .then(resp => {
-          if(resp === true) {
+          console.log(resp);
+          if(resp.status === true) {
             this.success = true;
             console.log("Budka obsazena.");
-          } else if(resp === false){
+          } else if(resp.status === false){
             this.success = false;
+            errors.push(resp.message);
+
             console.log("Budka neobsazena.")
           } else {
             this.success = false;
-            errors.push(resp);
-            console.log(resp)
+            errors.push(resp.message);
+            console.log(resp.message)
           }
         });
     }
