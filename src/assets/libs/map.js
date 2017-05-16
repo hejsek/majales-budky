@@ -3,6 +3,11 @@
 /// <reference path="libs/jquery.d.ts"/>
 /// <reference path="libs/osmtogeojson.d.ts"/>
 
+window['refreshData'] = refreshData;
+window['refreshTimers'] = refreshTimers;
+window['refreshMapCanvas'] = refreshMapCanvas;
+
+
 var map;
 
 var boothJson, voronoiJson, callplanJson, logJson;
@@ -11,15 +16,21 @@ var boothIcon;
 var boothOwners;
 //var colors = ["red","blue","lime","cyan","magenta","yellow","orange","green","darkviolet","brown"];
 var colors = ["#f00", "#00f", "#0f0", "cyan", "magenta", "yellow", "orange", "green", "darkviolet", "brown"];
-$.getJSON("assets/libs/booth.geojson", function (data) {
-  boothJson = data;
-  main();
-});
+// $.getJSON("assets/libs/booth.geojson", function (data) {
+//   boothJson = data;
+//   main();
+// });
+//
+// $.getJSON("assets/libs/voronoi.geojson", function (data) {
+//   voronoiJson = data;
+//   main();
+// });
 
-$.getJSON("assets/libs/voronoi.geojson", function (data) {
-  voronoiJson = data;
+function refreshMapCanvas(voronoi, booths) {
+  voronoiJson = (voronoi);
+  boothJson = (booths);
   main();
-});
+}
 
 function refreshData(callplan, log) {
   callplanJson = callplan;
@@ -27,13 +38,15 @@ function refreshData(callplan, log) {
 
   logJson = log;
   buildBoothOwners();
-
-
 }
 
 function main() {
-  if (!boothJson || !voronoiJson)
+  if (!boothJson || !voronoiJson) {
+    console.log("Map Canvas is not set.");
     return;
+  }
+
+
   // L.mapbox.accessToken = 'pk.eyJ1Ijoiam9uYXRhbjEwMjQiLCJhIjoiY2ltZHVpNDJ4MDAzM3Z1bTNmYjFoaXZvMyJ9._ZpLUtfKD1x21UfRhOEd7g';
   L.mapbox.accessToken = 'pk.eyJ1IjoiaGVqc2VrIiwiYSI6ImNqMjZlM3F3aTAwM28zM3NhZHFzaGkyYWQifQ.UvqIFoh1OK2X5giVpq4Ppw';
 
@@ -43,8 +56,8 @@ function main() {
 
   boothIcon = L.icon({iconUrl: 'assets/libs/images/telephone.png', iconAnchor: [24, 24]});
 
-  window['refreshData'] = refreshData;
-  window['refreshTimers'] = refreshTimers;
+
+
 
   loadGeoJson();
   //

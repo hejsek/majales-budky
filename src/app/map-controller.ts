@@ -3,6 +3,10 @@ export class MapController {
     window['refreshData'](callplan, log);
   }
 
+  public static refreshMapCanvas(voronoi, booths) {
+    window['refreshMapCanvas'](voronoi, booths);
+  }
+
   public static refreshTimers() {
     window['refreshTimers']();
   }

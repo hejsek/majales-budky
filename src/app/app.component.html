@@ -24,9 +24,9 @@
 </div>
 
 <!-- Bootstrap-map-js -->
-<app-map></app-map>
+<app-map  [callplan]="this.callplan" [log]="this.log"></app-map>
 
 <!-- Button trigger modal -->
 
-<app-capture *ngIf="showCaptureDialog" (captureNotify)="(this.showCaptureDialog = false)"></app-capture>
+<app-capture *ngIf="showCaptureDialog" (captureNotify)="captureNotify()" [teams]="this.teams"></app-capture>
 <app-how *ngIf="showHowDialog" (howNotify)="(this.showHowDialog = false)"></app-how>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, Input} from "@angular/core";
 import "../../assets/libs/map.js";
 import "rxjs/add/observable/interval";
 import {Observable} from "rxjs/Observable";
@@ -15,8 +15,9 @@ declare var map;
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  private callplan = {};
-  private log = {};
+  @Input() public callplan = {};
+  @Input()  public log = {};
+  @Input()  public teams = [];
 
   constructor(private dataService: DataService) {
   }
@@ -24,33 +25,47 @@ export class MapComponent implements OnInit {
   ngAfterViewInit() {
     // main();
 
-    let subscription = Observable.interval(100).subscribe(iteration => {
-      console.log(iteration);
-      if( window['refreshData'] != null) {
-        console.log("RefreshData initialized");
-        this.startSync();
-        subscription.unsubscribe();
-      }
+    // let subscription = Observable.interval(100).subscribe(iteration => {
+    //   // console.log(iteration);
+    //   if (window['refreshData'] != null) {
+    //     console.log("RefreshData initialized");
+    //     this.startSync();
+    //     subscription.unsubscribe();
+    //   }
+    // });
+
+
+    this.dataService.getMapData()
+      .then(resp => {
+        MapController.refreshMapCanvas(resp.voronoi, resp.booths);
+        console.log(resp);
+      }).then(resp => {
+      this.startSync();
+      this.refreshData();
+    }).then(resp => {
+      MapController.refreshData(this.callplan, this.log);
     });
 
 
   }
 
   ngOnInit() {
+    //noinspection TypeScriptUnresolvedFunction
 
   }
 
 
   startSync() {
     console.log("Map sync started");
-    this.refreshData();
 
-    Observable.interval(10000).subscribe(iteration => {
+
+    Observable.interval(30000).subscribe(iteration => {
       this.refreshData();
       console.log(iteration);
     });
     Observable.interval(100).subscribe(iteration => {
       MapController.refreshTimers();
+      MapController.refreshData(this.callplan, this.log);
 
     });
   }
@@ -73,7 +88,7 @@ export class MapComponent implements OnInit {
             this.log = log;
           });
       }).then(resp => {
-      MapController.refreshData(this.callplan, this.log)
+      MapController.refreshData(this.callplan, this.log);
       console.log("Map refreshed");
     });
 

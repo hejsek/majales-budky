@@ -1,6 +1,8 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input} from "@angular/core";
 import {FormGroup, FormControl, Validators, FormBuilder} from "@angular/forms";
 import {DataService} from "./../data.service";
+import "rxjs/add/observable/interval";
+import {Observable} from "rxjs/Observable";
 
 declare var $;
 
@@ -21,6 +23,7 @@ export class CaptureComponent implements OnInit {
 
   showCaptureDialog = false;
   @Output() captureNotify: EventEmitter<any> = new EventEmitter();
+  @Input() teams = [];
 
   ngOnInit() {
     console.log("Obsazení školy dialog - zobrazen");
@@ -28,16 +31,17 @@ export class CaptureComponent implements OnInit {
     $('#myModal').modal('toggle');
 
 
-
     $('#myModal').on('hidden.bs.modal', (e) => {
       this.captureNotify.emit();
     })
+
+    console.log("aaaaaaaaaaaaaaaa");
+    console.log(this.teams);
   }
 
   ngAfterViewInit() {
 
   }
-
 
 
   constructor(fb: FormBuilder, private dataService: DataService) {
@@ -64,16 +68,25 @@ export class CaptureComponent implements OnInit {
     }
 
 
-
-    if(errors.length <= 0) {
+    if (errors.length <= 0) {
       //noinspection TypeScriptUnresolvedFunction
       this.dataService.capture(skola, kod)
         .then(resp => {
           console.log(resp);
-          if(resp.status === true) {
+          if (resp.status === true) {
             this.success = true;
             console.log("Budka obsazena.");
-          } else if(resp.status === false){
+
+            let subscription = Observable.interval(1000).subscribe(iteration => {
+              if (iteration > 2) {
+                subscription.unsubscribe();
+                this.captureNotify.emit();
+              }
+
+            });
+
+
+          } else if (resp.status === false) {
             this.success = false;
             errors.push(resp.message);
 
@@ -88,8 +101,6 @@ export class CaptureComponent implements OnInit {
 
     this.errors = errors;
   }
-
-
 
 
 }

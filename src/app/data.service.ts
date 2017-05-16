@@ -15,7 +15,7 @@ export class DataService {
 
 
     console.log(school, code);
-    return this.http.post("http://localhost/majamapa/submit.php", "code=" + code + "&team=" + school, options)
+    return this.http.post("http://mapa.budejovickymajales.cz/submit.php", "code=" + code + "&team=" + school, options)
       .toPromise()
       .then(response => response.json() as any);
 
@@ -26,14 +26,28 @@ export class DataService {
     // headers.append("Content-Type", "application/json");
     // let options = new RequestOptions(({headers: headers}));
 
-    return this.http.get("http://localhost/majamapa/GetCallplan.php")
+    return this.http.get("http://mapa.budejovickymajales.cz/GetCallplan.php")
       .toPromise()
       .then(response => response.json() as any);
 
   }
 
   getLog(): Promise<any> {
-    return this.http.get("http://localhost/majamapa/GetLog.php")
+    return this.http.get("http://mapa.budejovickymajales.cz/GetLog.php")
+      .toPromise()
+      .then(response => response.json() as any);
+
+  }
+
+  getMapData(): Promise<any> {
+    return this.http.get("http://mapa.budejovickymajales.cz/GetMapData.php")
+      .toPromise()
+      .then(response => response.json() as any);
+
+  }
+
+  getTeams(): Promise<any> {
+    return this.http.get("http://mapa.budejovickymajales.cz/GetTeams.php")
       .toPromise()
       .then(response => response.json() as any);
 

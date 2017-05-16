@@ -19,13 +19,8 @@
           <div class="form-group form-group-lg">
             <label for="skolaSelect">Škola</label>
             <select class="form-control" id="skolaSelect" formControlName="skola">
-              <option></option>
-              <option value="0">GJVJ</option>
-              <option value="1">GYMJI</option>
-              <option value="2">BIGY</option>
-              <option value="3">Česká</option>
-              <option value="4">Stavárna</option>
-              <option value="5">Zdrávka</option>
+              <option disabled></option>
+              <option *ngFor="let event of this.teams; let i = index" value="{{i}}">{{event}}</option>
             </select>
           </div>
           <div class="form-group form-group-lg">
